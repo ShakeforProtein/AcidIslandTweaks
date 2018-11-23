@@ -1,0 +1,7 @@
+name: AcidTweaks
+version: ${project.version}
+main: me.shakeforprotein.acidtweaks.AcidTweaks
+prefix: AcidTweaks
+authors: [ShakeforProtein]
+description: Tweaks for acid island
+website: http://treebomc.com
