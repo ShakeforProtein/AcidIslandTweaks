@@ -6,12 +6,12 @@ public final class AcidTweaks extends JavaPlugin {
 
     @Override
     public void onEnable() {
-        // Plugin startup logic
+    System.out.println("Acid Island Tweaks Started");
 
     }
 
     @Override
     public void onDisable() {
-        // Plugin shutdown logic
+    System.out.println("Acid Island Tweaks Shutdown");
     }
 }
