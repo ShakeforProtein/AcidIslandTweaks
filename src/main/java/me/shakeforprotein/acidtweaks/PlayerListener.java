@@ -30,7 +30,7 @@ public class PlayerListener implements Listener {
 
     @EventHandler
     public void onInteract(PlayerInteractEvent e) {
-        if (plugin.getConfig().get("pourCorrosion") == "true") {
+        if (plugin.getConfig().get("pourCorrosion").toString().equalsIgnoreCase("true")) {
             if (e.getClickedBlock() != null && e.getClickedBlock().getType() != Material.AIR) {
                 Player p = e.getPlayer();
                 String World = p.getLocation().getWorld().getName();
@@ -63,7 +63,7 @@ public class PlayerListener implements Listener {
 
     @EventHandler
     public void onConsumeEvent(PlayerItemConsumeEvent e) {
-        if (plugin.getConfig().get("deadlyDrink") == "true") {
+        if (plugin.getConfig().get("deadlyDrink").toString().equalsIgnoreCase("true")) {
             String World = e.getPlayer().getWorld().getName();
             String pWorld;
             if ((World.equalsIgnoreCase("AcidIsland_world")) || (World.equalsIgnoreCase("AcidIsland_world_nether")) || (World.equalsIgnoreCase("AcidIsland_world_the_end"))) {
@@ -152,16 +152,18 @@ public class PlayerListener implements Listener {
 
     @EventHandler
     public void onPlayerMoveEvent(PlayerMoveEvent e) {
-        if (plugin.getConfig().get("worldCorrosion") == "true") {
+        if (plugin.getConfig().get("worldCorrosion").toString().equalsIgnoreCase("true")) {
+            Player p = e.getPlayer();
             String world = e.getPlayer().getWorld().getName();
-            if ((world.equalsIgnoreCase("AcidIsland_world")) || (world.equalsIgnoreCase("AcidIsland_world_nether")) || (world.equalsIgnoreCase("AcidIsland_world_the_end"))) {
+            if (world.contains("AcidIsland")) {
 
-                Player p = e.getPlayer();
                 if (!cooldown.contains(p.getUniqueId().toString())) {
                     cooldown.add(p.getUniqueId().toString());
+                    p.sendMessage("onlist");
                     Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
                         public void run() {
                             cooldown.remove(p.getUniqueId().toString());
+                            p.sendMessage("offList");
                         }
                     }, 1200L);
 
@@ -188,9 +190,7 @@ public class PlayerListener implements Listener {
                                             adjacentBlock = targetBlock.getRelative(side);
                                             if (adjacentBlock.getType() == Material.WATER) {
 
-
                                                 for (String cblock : plugin.getConfig().getConfigurationSection("blocks").getKeys(false)) {
-                                                    p.sendMessage(plugin.getConfig().getString("blocks." + cblock));
                                                     if (targetBlock.getType() == Material.matchMaterial(cblock)) {
                                                         int ran = (int) (Math.random() * (upper - lower)) + lower;
                                                         if (ran < 15) {
