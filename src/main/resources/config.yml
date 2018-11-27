@@ -1,6 +1,16 @@
+#Very important the blocks listed below are in reverse corrosion order. If you have the in Stone > Cobble > Gravel, then there is a chance your Stone will turn into gravel,
+
+deadlyDrink: 'true'
+pourCorrosion: 'true'
+worldCorrosion: 'true'
+
+xCorr: 10
+yCorr: 2
+zCorr: 10
+
 blocks:
-  STONE_BRICKS: 'STONE'
-  STONE: 'COBBLESTONE'
-  COBBLESTONE: 'GRAVEL'
-  GRAVEL: 'SAND'
   SAND: 'AIR'
+  GRAVEL: 'SAND'
+  COBBLESTONE: 'GRAVEL'
+  STONE: 'COBBLESTONE'
+  STONE_BRICKS: 'STONE'
