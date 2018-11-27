@@ -1,6 +1,7 @@
 package me.shakeforprotein.acidtweaks;
 
 import org.bukkit.Bukkit;
+import org.bukkit.Effect;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -36,6 +37,7 @@ public class PlayerListener implements Listener {
                         p.damage(1);
                         for (String blocks : plugin.getConfig().getConfigurationSection("blocks").getKeys(false))
                             if (e.getClickedBlock().getType() == Material.matchMaterial(blocks)) {
+                                e.getClickedBlock().getWorld().playEffect(e.getClickedBlock().getLocation().add(0,1,0), Effect.SMOKE, 31, 3);
                                 e.getClickedBlock().setType(Material.getMaterial(plugin.getConfig().getConfigurationSection("blocks").get("" + blocks).toString()));
                                 item.setType(Material.GLASS_BOTTLE);
                                 break;
