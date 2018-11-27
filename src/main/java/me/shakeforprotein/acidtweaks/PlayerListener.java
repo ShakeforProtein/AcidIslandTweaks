@@ -159,11 +159,9 @@ public class PlayerListener implements Listener {
 
                 if (!cooldown.contains(p.getUniqueId().toString())) {
                     cooldown.add(p.getUniqueId().toString());
-                    p.sendMessage("onlist");
                     Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
                         public void run() {
                             cooldown.remove(p.getUniqueId().toString());
-                            p.sendMessage("offList");
                         }
                     }, 1200L);
 
@@ -195,6 +193,8 @@ public class PlayerListener implements Listener {
                                                         int ran = (int) (Math.random() * (upper - lower)) + lower;
                                                         if (ran < 15) {
                                                             targetBlock.setType(Material.getMaterial(plugin.getConfig().getConfigurationSection("blocks").getString(cblock)));
+                                                            targetBlock.getWorld().playEffect(targetBlock.getLocation().add(0, 0, 0), Effect.SMOKE, 31, 6);
+
                                                         }
                                                     }
                                                 }

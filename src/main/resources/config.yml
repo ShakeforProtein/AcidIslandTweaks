@@ -4,12 +4,13 @@ deadlyDrink: 'true'
 pourCorrosion: 'true'
 worldCorrosion: 'true'
 
-xCorr: 10
+xCorr: 5
 yCorr: 2
-zCorr: 10
+zCorr: 5
 
 blocks:
   SAND: 'AIR'
+  SANDSTONE: 'SAND'
   GRAVEL: 'SAND'
   COBBLESTONE: 'GRAVEL'
   STONE: 'COBBLESTONE'
