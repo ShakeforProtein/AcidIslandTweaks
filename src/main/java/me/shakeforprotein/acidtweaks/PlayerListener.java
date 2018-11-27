@@ -24,30 +24,34 @@ public class PlayerListener implements Listener {
 
     @EventHandler
     public void onInteract(PlayerInteractEvent e) {
-        Player p = e.getPlayer();
-        String World = p.getLocation().getWorld().getName();
-        if ((World.equalsIgnoreCase("AcidIsland_world")) || (World.equalsIgnoreCase("AcidIsland_world_nether")) || (World.equalsIgnoreCase("AcidIsland_world_the_end"))) {
-            ItemStack item = e.getItem();
+        if (e.getClickedBlock() != null && e.getClickedBlock().getType() != Material.AIR) {
+            Player p = e.getPlayer();
+            String World = p.getLocation().getWorld().getName();
 
-            if (item.getType() == Material.POTION && item.hasItemMeta()) {
-                if (item.getItemMeta() instanceof PotionMeta) {
-                    final PotionMeta pmeta = (PotionMeta) item.getItemMeta();
-                    final PotionData pdata = pmeta.getBasePotionData();
-                    if (pdata.getType() == PotionType.WATER) {
-                        p.damage(1);
-                        for (String blocks : plugin.getConfig().getConfigurationSection("blocks").getKeys(false))
-                            if (e.getClickedBlock().getType() == Material.matchMaterial(blocks)) {
-                                e.getClickedBlock().getWorld().playEffect(e.getClickedBlock().getLocation().add(0,1,0), Effect.SMOKE, 31, 3);
-                                e.getClickedBlock().setType(Material.getMaterial(plugin.getConfig().getConfigurationSection("blocks").get("" + blocks).toString()));
-                                item.setType(Material.GLASS_BOTTLE);
-                                break;
-                            }
+            if ((World.equalsIgnoreCase("AcidIsland_world")) || (World.equalsIgnoreCase("AcidIsland_world_nether")) || (World.equalsIgnoreCase("AcidIsland_world_the_end"))) {
+                ItemStack item = e.getItem();
+
+                if (item != null && item.getType() != null  && item.getType() == Material.POTION && item.hasItemMeta()) {
+                    if (item.getItemMeta() != null && item.getItemMeta() instanceof PotionMeta) {
+                        final PotionMeta pmeta = (PotionMeta) item.getItemMeta();
+                        final PotionData pdata = pmeta.getBasePotionData();
+                        if (pdata.getType() == PotionType.WATER) {
+                            p.damage(1);
+                            for (String blocks : plugin.getConfig().getConfigurationSection("blocks").getKeys(false))
+                                if (e.getClickedBlock().getType() == Material.matchMaterial(blocks)) {
+                                    e.getClickedBlock().getWorld().playEffect(e.getClickedBlock().getLocation().add(0, 1, 0), Effect.SMOKE, 31, 3);
+                                    e.getClickedBlock().setType(Material.getMaterial(plugin.getConfig().getConfigurationSection("blocks").get("" + blocks).toString()));
+                                    item.setType(Material.GLASS_BOTTLE);
+                                    break;
+                                }
+                        }
                     }
-
                 }
             }
         }
     }
+
+
 
     @EventHandler
     public void onConsumeEvent(PlayerItemConsumeEvent e) {
@@ -106,4 +110,5 @@ public class PlayerListener implements Listener {
             }
         }
     }
+
 }
