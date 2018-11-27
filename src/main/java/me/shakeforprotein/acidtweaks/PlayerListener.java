@@ -11,16 +11,14 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.PotionMeta;
 import org.bukkit.potion.*;
 
-import java.util.Set;
-
 public class PlayerListener implements Listener {
 
 
-    private AcidTweaks pl;
+    private AcidTweaks plugin;
 
-    public void PlayerListener(AcidTweaks instance) {
-        instance.getServer().getPluginManager().registerEvents(this, instance);
-        this.pl = instance;
+    public PlayerListener(AcidTweaks main) {
+
+        plugin = main;
     }
 
     @EventHandler
@@ -36,12 +34,14 @@ public class PlayerListener implements Listener {
                     final PotionData pdata = pmeta.getBasePotionData();
                     if (pdata.getType() == PotionType.WATER) {
 
-                        for (String blocks : pl.getConfig().getConfigurationSection("blocks").getKeys(false))
+                        for (String blocks : plugin.getConfig().getConfigurationSection("blocks").getKeys(false))
                             if (e.getClickedBlock().getType() == Material.matchMaterial(blocks)) {
-                                e.getClickedBlock().setType(Material.getMaterial(pl.getConfig().getConfigurationSection("blocks").get("" + blocks).toString()));
+                                e.getClickedBlock().setType(Material.getMaterial(plugin.getConfig().getConfigurationSection("blocks").get("" + blocks).toString()));
+                                item.setType(Material.GLASS_BOTTLE);
+                                break;
                             }
                     }
-                    item.setType(Material.AIR);
+
                 }
             }
         }
@@ -55,42 +55,46 @@ public class PlayerListener implements Listener {
             if (pdata.getType() == PotionType.WATER) {
                 Player p = e.getPlayer();
                 p.sendMessage("... You feel tired");
-                Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(pl, new Runnable() {
+
+                Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
                     public void run() {
                         p.sendMessage("... You struggle to keep your eyes open");
                         p.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 200000, 1), true);
-                        Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(pl, new Runnable() {
-                            public void run() {
-                                p.sendMessage("You start to feel lighter");
-                                p.addPotionEffect(new PotionEffect(PotionEffectType.HARM, 1, 1), true);
-                                Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(pl, new Runnable() {
-                                    public void run() {
-                                        p.sendMessage("... Much lighter");
-                                        p.addPotionEffect(new PotionEffect(PotionEffectType.LEVITATION, 2000, 1), true);
-                                        Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(pl, new Runnable() {
-                                            public void run() {
-                                                p.sendMessage("... Like all the weight has been lifted off your shoulders");
-                                                p.addPotionEffect(new PotionEffect(PotionEffectType.HARM, 1, 2), true);
-                                                p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_FALLING, 200000, 1), true);
-                                                Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(pl, new Runnable() {
-                                                    public void run() {
-                                                        p.sendMessage("You feel so light, you are starting to feel unwell");
-                                                        p.addPotionEffect(new PotionEffect(PotionEffectType.HUNGER, 200000, 1), true);
-                                                        p.addPotionEffect(new PotionEffect(PotionEffectType.CONFUSION, 200000, 1), true);
-                                                        p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 200000, 1), true);
-                                                        p.addPotionEffect(new PotionEffect(PotionEffectType.WITHER, 200000, 1), true);
-                                                    }
-                                                }, 40L);
-                                            }
-                                        }, 40L);
-
-                                    }
-                                }, 40L);
-                            }
-                        }, 40L);
                     }
-
                 }, 40L);
+
+                Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
+                    public void run() {
+                        p.sendMessage("You start to feel lighter");
+                        p.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS, 1, 1), true);
+                    }
+                }, 80L);
+
+                Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
+                    public void run() {
+                        p.sendMessage("... Much lighter");
+                        p.addPotionEffect(new PotionEffect(PotionEffectType.LEVITATION, 2000, 1), true);
+                    }
+                }, 250L);
+
+                Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
+                    public void run() {
+                        p.sendMessage("... Like all the weight has been lifted off your shoulders");
+                        p.addPotionEffect(new PotionEffect(PotionEffectType.POISON, 200000, 1), true);
+                        p.addPotionEffect(new PotionEffect(PotionEffectType.NIGHT_VISION, 200000, 2), true);
+                        p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_FALLING, 200000, 1), true);
+                    }
+                }, 400L);
+
+                Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
+                    public void run() {
+                        p.sendMessage("You feel so light, you are starting to feel unwell");
+                        p.addPotionEffect(new PotionEffect(PotionEffectType.HUNGER, 200000, 1), true);
+                        p.addPotionEffect(new PotionEffect(PotionEffectType.CONFUSION, 200000, 1), true);
+                        p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 200000, 1), true);
+                        p.addPotionEffect(new PotionEffect(PotionEffectType.WITHER, 200000, 1), true);
+                    }
+                }, 800L);
             }
         }
     }
