@@ -10,22 +10,31 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerItemConsumeEvent;
+import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.PotionMeta;
 import org.bukkit.potion.*;
-
 import java.util.ArrayList;
-import java.util.Random;
+
 
 public class PlayerListener implements Listener {
 
 
     private AcidTweaks plugin;
+    private UpdateChecker uc;
 
     public PlayerListener(AcidTweaks main) {
-
         plugin = main;
+        this.uc = new UpdateChecker(main);
+    }
+
+
+    @EventHandler
+    public void onPlayerJoinEvent(PlayerJoinEvent e) {
+        if (e.getPlayer().hasPermission(uc.requiredPermission)) {
+            uc.getCheckDownloadURL(e.getPlayer());
+        }
     }
 
     @EventHandler

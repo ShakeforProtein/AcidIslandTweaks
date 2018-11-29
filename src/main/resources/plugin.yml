@@ -5,3 +5,8 @@ prefix: AcidTweaks
 authors: [ShakeforProtein]
 description: Tweaks for acid island
 website: http://treebomc.com
+
+permissions:
+  acidtweaks.updatecheck:
+    description: 'Issues update check when player logs in'
+    default: op

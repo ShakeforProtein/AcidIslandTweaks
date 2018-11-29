@@ -5,6 +5,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 public final class AcidTweaks extends JavaPlugin {
 
     private PlayerListener pl;
+    private UpdateChecker uc;
     public AcidTweaks(){}
 
     @Override
@@ -15,8 +16,9 @@ public final class AcidTweaks extends JavaPlugin {
         getConfig().set("version", this.getDescription().getVersion());
         saveConfig();
         System.out.println("Config updated");
+        this.uc = new UpdateChecker(this);
+        uc.getCheckDownloadURL();
         System.out.println("Acid Island Tweaks Loadewd");
-
     }
 
     @Override
