@@ -7,6 +7,6 @@ description: Tweaks for acid island
 website: http://treebomc.com
 
 permissions:
-  acidtweaks.updatecheck:
+  acidtweaks.updatechecker:
     description: 'Issues update check when player logs in'
     default: op
