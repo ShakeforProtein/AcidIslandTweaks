@@ -18,12 +18,11 @@ public final class AcidTweaks extends JavaPlugin {
         System.out.println("Config updated");
         this.uc = new UpdateChecker(this);
         uc.getCheckDownloadURL();
-        System.out.println("Acid Island Tweaks Loadewd");
+        System.out.println("Acid Island Tweaks Loaded");
     }
 
     @Override
     public void onDisable() {
-        saveConfig();
         System.out.println("Acid Island Tweaks Shutdown");
     }
 }

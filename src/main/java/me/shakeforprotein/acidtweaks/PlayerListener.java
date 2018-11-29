@@ -33,7 +33,24 @@ public class PlayerListener implements Listener {
     @EventHandler
     public void onPlayerJoinEvent(PlayerJoinEvent e) {
         if (e.getPlayer().hasPermission(uc.requiredPermission)) {
-            uc.getCheckDownloadURL(e.getPlayer());
+            if ((plugin.getConfig().getString(e.getPlayer().getName()) == null) || ((plugin.getConfig().getString(e.getPlayer().getName()) != null) && (plugin.getConfig().getString(e.getPlayer().getName()).equalsIgnoreCase("false")))) {
+                uc.getCheckDownloadURL(e.getPlayer());
+                plugin.getConfig().set(e.getPlayer().getName(), "true");
+                Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
+                    public void run() {
+                        plugin.getConfig().set(e.getPlayer().getName(), "false");
+                    }
+                }, 60L);
+            } else {
+                Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
+                    public void run() {
+                        try {
+                            plugin.getConfig().set(e.getPlayer().getName(), null);
+                        } catch (NullPointerException e) {
+                        }
+                    }
+                }, 80L);
+            }
         }
     }
 

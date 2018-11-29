@@ -16,7 +16,7 @@ public class UpdateChecker {
 
     //These two need to be changed for different plugins
     private AcidTweaks pl;
-    public String requiredPermission = pl.getName().toLowerCase() + ".updatechecker";
+    public String requiredPermission = "acidtweaks.updatechecker";
 
     public UpdateChecker(AcidTweaks pl) {
         this.pl = pl;
