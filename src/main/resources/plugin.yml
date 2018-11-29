@@ -8,5 +8,5 @@ website: http://treebomc.com
 
 permissions:
   acidtweaks.updatechecker:
-    description: 'Issues update check when player logs in'
+    description: 'Notifies player of available updates'
     default: op
