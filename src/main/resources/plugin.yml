@@ -9,4 +9,12 @@ website: http://treebomc.com
 permissions:
   acidtweaks.updatechecker:
     description: 'Notifies player of available updates'
-    default: op
+    default: "op"
+  acidtweaks.reload:
+    description: "Reloads the config"
+    deafault: "op"
+
+commands:
+  acidtweaks:
+    description: ''
+    usage: /<command> <subcommand>

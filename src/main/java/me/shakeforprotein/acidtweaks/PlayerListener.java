@@ -208,6 +208,15 @@ public class PlayerListener implements Listener {
                         for (int y = yRadius; y >= -yRadius; y--) {
                             for (int z = zRadius; z >= -zRadius; z--) {
                                 targetBlock = middle.getRelative(x, y, z);
+
+                             /*   if (plugin.getConfig().getString("leafDecay") == "true") {
+                                    if ((targetBlock.getType() == Material.ACACIA_LEAVES) || (targetBlock.getType() == Material.BIRCH_LEAVES) || (targetBlock.getType() == Material.DARK_OAK_LEAVES) || (targetBlock.getType() == Material.JUNGLE_LEAVES) || (targetBlock.getType() == Material.OAK_LEAVES) || (targetBlock.getType() == Material.SPRUCE_LEAVES)){
+
+                                       }
+                                    }
+                                }
+                            */
+
                                 for (String blocks : plugin.getConfig().getConfigurationSection("blocks").getKeys(false))
                                     if (targetBlock.getType() == Material.matchMaterial(blocks)) {
                                         for (BlockFace side : sides) {
@@ -217,7 +226,7 @@ public class PlayerListener implements Listener {
                                                 for (String cblock : plugin.getConfig().getConfigurationSection("blocks").getKeys(false)) {
                                                     if (targetBlock.getType() == Material.matchMaterial(cblock)) {
                                                         int ran = (int) (Math.random() * (upper - lower)) + lower;
-                                                        if (ran < 15) {
+                                                        if (ran < plugin.getConfig().getInt("degradeChanceInPercent")) {
                                                             targetBlock.setType(Material.getMaterial(plugin.getConfig().getConfigurationSection("blocks").getString(cblock)));
                                                             targetBlock.getWorld().playEffect(targetBlock.getLocation().add(0, 0, 0), Effect.SMOKE, 31, 6);
 
