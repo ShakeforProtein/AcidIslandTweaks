@@ -34,7 +34,7 @@ public final class AcidTweaks extends JavaPlugin {
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
 
         if (sender instanceof Player) {
-            if ((cmd.getName().equalsIgnoreCase("acidtweaks")) && (args.length == 1) && args[0].equalsIgnoreCase("reload")) {
+            if ((cmd.getName().equalsIgnoreCase("acidtweaks")) && (args.length == 1) && args[0].equalsIgnoreCase("reload") && ((Player) sender).getPlayer().hasPermission("acidtweaks.reload")) {
                 reloadConfig();
             }
         }
